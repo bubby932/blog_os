@@ -14,7 +14,7 @@ mod serial;
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    blog_os::hlt_loop();
 }
 #[cfg(test)]
 #[panic_handler]
@@ -22,7 +22,7 @@ fn panic(info: &PanicInfo) -> ! {
     serial_println!("[failed]\n");
     serial_println!("{}\n", info);
     exit_qemu(QemuExitCode::Failed);
-    loop {}
+    blog_os::hlt_loop();
 }
 
 pub trait Testable {
@@ -36,7 +36,7 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    loop {}
+    blog_os::hlt_loop();
 }
 
 #[test_case]
